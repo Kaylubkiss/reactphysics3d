@@ -171,7 +171,7 @@ class QHHalfEdgeStructure {
 
                 assert(nbVertices > 0);
 
-                centroid = centroid / nbVertices;
+                centroid = centroid / static_cast<decimal>(nbVertices);
                 const decimal normalLength = normal.length();
                 assert(normalLength > 0);
                 normal = normal / normalLength;
@@ -211,7 +211,7 @@ class QHHalfEdgeStructure {
             bool isValid() {
                bool isValid = true;
 
-               isValid &= approxEqual(normal.lengthSquare(), 1.0, 0.01);
+               isValid &= approxEqual(normal.lengthSquare(), decimal(1.0), decimal(0.01));
                isValid &= edge->face == this;
 
                 const QHHalfEdgeStructure::Edge* firstFaceEdge = edge;

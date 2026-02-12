@@ -152,7 +152,7 @@ void QuickHull::computeFinalPolygonVertexArray(const QHHalfEdgeStructure& convex
 
         PolygonVertexArray::PolygonFace polygonFace;
         polygonFace.nbVertices = 0;
-        polygonFace.indexBase = outIndices.size();
+        polygonFace.indexBase = static_cast<uint32>(outIndices.size());
 
         // For each edge of the face
         QHHalfEdgeStructure::Edge* firstFaceEdge = face->edge;
@@ -162,7 +162,7 @@ void QuickHull::computeFinalPolygonVertexArray(const QHHalfEdgeStructure& convex
             assert(faceEdge != nullptr);
 
             const uint32 vOldIndex = faceEdge->startVertex->externalIndex;
-            uint32 vNewIndex = outVertices.size() / 3;
+            uint32 vNewIndex = static_cast<uint32>(outVertices.size() / 3);
             auto it = mapOldVertexIndexToNew.find(vOldIndex);
 
             // If the vertex is already in the new array of vertices
@@ -194,9 +194,9 @@ void QuickHull::computeFinalPolygonVertexArray(const QHHalfEdgeStructure& convex
     assert(convexHull.getNbVertices() == outVertices.size() / 3);
     assert(convexHull.getNbFaces() == outFaces.size());
 
-    outPolygonVertexArray.init(outVertices.size() / 3, &(outVertices[0]), 3 * sizeof(float),
+    outPolygonVertexArray.init(static_cast<uint32>(outVertices.size() / 3), &(outVertices[0]), 3 * sizeof(float),
                                &(outIndices[0]), sizeof(unsigned int),
-                               outFaces.size(), &(outFaces[0]),
+                               static_cast<uint32>(outFaces.size()), &(outFaces[0]),
                                PolygonVertexArray::VertexDataType::VERTEX_FLOAT_TYPE,
                                PolygonVertexArray::IndexDataType::INDEX_INTEGER_TYPE);
 }
@@ -280,7 +280,7 @@ void QuickHull::deleteVisibleFaces(const Array<QHHalfEdgeStructure::Face*>& visi
                                    const Array<QHHalfEdgeStructure::Vertex*>& horizonVertices,
                                    MemoryAllocator& allocator) {
 
-    const uint32 nbFaces = visibleFaces.size();
+    const uint32 nbFaces = static_cast<uint32>(visibleFaces.size());
 
     Set<QHHalfEdgeStructure::Vertex*> verticesToRemove(allocator);
 
@@ -765,7 +765,7 @@ void QuickHull::removeDuplicatedVertices(Array<Vector3>& points, MemoryAllocator
     for (uint32 i=0; i < points.size(); i++) {
         center += points[i];
     }
-    center /= points.size();
+    center /= static_cast<decimal>(points.size());
 
     // For each input point
     for (uint32 i=0; i < points.size(); i++) {
@@ -899,7 +899,7 @@ bool QuickHull::computeInitialHull(Array<Vector3>& points, QHHalfEdgeStructure& 
 
     uint32 extremePointsIndices[6] = {0, 0, 0, 0, 0, 0};
 
-    const uint32 nbPoints = points.size();
+    const uint32 nbPoints = static_cast<uint32>(points.size());
     for (uint32 i=0; i < nbPoints; i++) {
 
         if (points[i].x < points[extremePointsIndices[0]].x) {
@@ -1061,13 +1061,13 @@ void QuickHull::extractPoints(const VertexArray& vertexArray, Array<Vector3>& ou
     if (vertexArray.getDataType() == VertexArray::DataType::VERTEX_FLOAT_TYPE) {
         for (uint32 p=0; p < vertexArray.getNbVertices(); p++) {
             const float* points = (float*)(pointsStartPointer + p * vertexArray.getStride());
-            outArray.add(Vector3(points[0], points[1], points[2]));
+            outArray.add(Vector3(decimal(points[0]), decimal(points[1]), decimal(points[2])));
         }
     }
     else if (vertexArray.getDataType() == VertexArray::DataType::VERTEX_DOUBLE_TYPE) {
         for (uint32 p=0; p < vertexArray.getNbVertices(); p++) {
             const double* points = (double*)(pointsStartPointer + p * vertexArray.getStride());
-            outArray.add(Vector3(points[0], points[1], points[2]));
+            outArray.add(Vector3(decimal(points[0]), decimal(points[1]), decimal(points[2])));
         }
     }
     else {

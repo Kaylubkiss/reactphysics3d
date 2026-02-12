@@ -339,7 +339,7 @@ void DebugRenderer::drawConvexMesh(const Transform& transform, const ConvexMeshS
 
         if (drawNormal) {
 
-            centroid /= nbFaceVertices;
+            centroid /= static_cast<decimal>(nbFaceVertices);
             const Vector3 normalPoint = centroid + transform.getOrientation() * convexMesh->getFaceNormal(f) * mCollisionShapeNormalLength;
             mLines.add(DebugLine(centroid, normalPoint, colorShapeNormals));
         }

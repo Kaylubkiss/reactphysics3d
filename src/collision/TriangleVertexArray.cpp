@@ -147,19 +147,23 @@ Vector3 TriangleVertexArray::getVertex(uint32 vertexIndex) const {
     const uchar* vertexPointerChar = mVerticesStart + vertexIndex * mVerticesStride;
     const void* vertexPointer = static_cast<const void*>(vertexPointerChar);
 
+    Vector3 returnVertex;
+
     // Get the vertices components of the triangle
     if (mVertexDataType == TriangleVertexArray::VertexDataType::VERTEX_FLOAT_TYPE) {
 
         const float* vertices = static_cast<const float*>(vertexPointer);
-        return Vector3(decimal(vertices[0]), decimal(vertices[1]), decimal(vertices[2]));
+        returnVertex = Vector3(decimal(vertices[0]), decimal(vertices[1]), decimal(vertices[2]));
     }
     else if (mVertexDataType == TriangleVertexArray::VertexDataType::VERTEX_DOUBLE_TYPE) {
         const double* vertices = static_cast<const double*>(vertexPointer);
-        return Vector3(decimal(vertices[0]), decimal(vertices[1]), decimal(vertices[2]));
+        returnVertex = Vector3(decimal(vertices[0]), decimal(vertices[1]), decimal(vertices[2]));
     }
     else {
         assert(false);
     }
+
+    return returnVertex;
 }
 
 // Return a vertex normal of the array
