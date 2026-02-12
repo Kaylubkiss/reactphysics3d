@@ -58,7 +58,7 @@ void ConvexMeshShape::computeScaledFacesNormals() {
         Vector3 normal = mConvexMesh->getFaceNormal(f);
 
         // Scale the normal
-        normal = Vector3(1.0 / mScale.x, 1.0 / mScale.y, 1.0 / mScale.z) * normal;
+        normal = Vector3(decimal(1.0) / mScale.x, decimal(1.0) / mScale.y, decimal(1.0) / mScale.z) * normal;
 
         // Normalize the normal
         const decimal normalLength = normal.length();

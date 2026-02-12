@@ -32,12 +32,18 @@ using namespace reactphysics3d;
 CollisionDispatch::CollisionDispatch(MemoryAllocator& allocator) : mAllocator(allocator) {
 
     // Make sure to allocate memory with size that is multiple integral of alignment
-    mSphereVsSphereAllocatedSize = std::ceil(sizeof(SphereVsSphereAlgorithm) / float(GLOBAL_ALIGNMENT)) * GLOBAL_ALIGNMENT;
-    mSphereVsCapsuleAllocatedSize = std::ceil(sizeof(SphereVsCapsuleAlgorithm) / float(GLOBAL_ALIGNMENT)) * GLOBAL_ALIGNMENT;
-    mCapsuleVsCapsuleAllocatedSize = std::ceil(sizeof(CapsuleVsCapsuleAlgorithm) / float(GLOBAL_ALIGNMENT)) * GLOBAL_ALIGNMENT;
-    mSphereVsConvexPolyAllocatedSize = std::ceil(sizeof(SphereVsConvexPolyhedronAlgorithm) / float(GLOBAL_ALIGNMENT)) * GLOBAL_ALIGNMENT;
-    mCapsuleVsConvexPolyAllocatedSize = std::ceil(sizeof(CapsuleVsConvexPolyhedronAlgorithm) / float(GLOBAL_ALIGNMENT)) * GLOBAL_ALIGNMENT;
-    mConvexPolyVsConvexPolyAllocatedSize = std::ceil(sizeof(ConvexPolyhedronVsConvexPolyhedronAlgorithm) / float(GLOBAL_ALIGNMENT)) * GLOBAL_ALIGNMENT;
+    mSphereVsSphereAllocatedSize =
+        static_cast<size_t>(std::ceil(sizeof(SphereVsSphereAlgorithm) / float(GLOBAL_ALIGNMENT)) * GLOBAL_ALIGNMENT);
+    mSphereVsCapsuleAllocatedSize =
+        static_cast<size_t>(std::ceil(sizeof(SphereVsCapsuleAlgorithm) / float(GLOBAL_ALIGNMENT)) * GLOBAL_ALIGNMENT);
+    mCapsuleVsCapsuleAllocatedSize =
+        static_cast<size_t>(std::ceil(sizeof(CapsuleVsCapsuleAlgorithm) / float(GLOBAL_ALIGNMENT)) * GLOBAL_ALIGNMENT);
+    mSphereVsConvexPolyAllocatedSize =
+        static_cast<size_t>(std::ceil(sizeof(SphereVsConvexPolyhedronAlgorithm) / float(GLOBAL_ALIGNMENT)) * GLOBAL_ALIGNMENT);
+    mCapsuleVsConvexPolyAllocatedSize =
+        static_cast<size_t>(std::ceil(sizeof(CapsuleVsConvexPolyhedronAlgorithm) / float(GLOBAL_ALIGNMENT)) * GLOBAL_ALIGNMENT);
+    mConvexPolyVsConvexPolyAllocatedSize =
+        static_cast<size_t>(std::ceil(sizeof(ConvexPolyhedronVsConvexPolyhedronAlgorithm) / float(GLOBAL_ALIGNMENT)) * GLOBAL_ALIGNMENT);
 
     // Create the default narrow-phase algorithms
     mSphereVsSphereAlgorithm = new (allocator.allocate(mSphereVsSphereAllocatedSize)) SphereVsSphereAlgorithm();

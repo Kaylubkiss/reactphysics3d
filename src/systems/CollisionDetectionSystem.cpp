@@ -49,7 +49,8 @@ using namespace reactphysics3d;
 using namespace std;
 
 // TriangleShape allocated size
-const size_t CollisionDetectionSystem::mTriangleShapeAllocatedSize = std::ceil(sizeof(TriangleShape) / float(GLOBAL_ALIGNMENT)) * GLOBAL_ALIGNMENT;
+const size_t CollisionDetectionSystem::mTriangleShapeAllocatedSize =
+    static_cast<size_t>(std::ceil(sizeof(TriangleShape) / float(GLOBAL_ALIGNMENT)) * GLOBAL_ALIGNMENT);
 
 // Constructor
 CollisionDetectionSystem::CollisionDetectionSystem(PhysicsWorld* world, ColliderComponents& collidersComponents,  TransformComponents& transformComponents,

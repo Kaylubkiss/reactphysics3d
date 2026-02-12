@@ -33,7 +33,8 @@
 using namespace reactphysics3d;
 
 // TriangleShape allocated size
-const size_t NarrowPhaseInfoBatch::mTriangleShapeAllocatedSize = std::ceil(sizeof(TriangleShape) / float(GLOBAL_ALIGNMENT)) * GLOBAL_ALIGNMENT;
+const size_t NarrowPhaseInfoBatch::mTriangleShapeAllocatedSize =
+    static_cast<size_t>(std::ceil(sizeof(TriangleShape) / float(GLOBAL_ALIGNMENT)) * GLOBAL_ALIGNMENT);
 
 // Constructor
 NarrowPhaseInfoBatch::NarrowPhaseInfoBatch(OverlappingPairs& overlappingPairs, MemoryAllocator& allocator)

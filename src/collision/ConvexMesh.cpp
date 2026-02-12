@@ -219,10 +219,12 @@ Vector3 ConvexMesh::computeFaceNormal(uint32 faceIndex) const {
     Vector3 normal(0, 0, 0);
 
     const HalfEdgeStructure::Face& face = mHalfEdgeStructure.getFace(faceIndex);
+
     assert(face.faceVertices.size() >= 3);
 
     // Use Newell's method to compute the face normal
-    for (uint32 i = face.faceVertices.size() - 1, j = 0; j < face.faceVertices.size(); i = j, j++) {
+    const uint32 nbFaceVertices = static_cast<uint32>(face.faceVertices.size());
+    for (uint32 i = nbFaceVertices - 1, j = 0; j < nbFaceVertices; i = j, j++) {
 
         const Vector3& v1 = getVertex(face.faceVertices[i]);
         const Vector3& v2 = getVertex(face.faceVertices[j]);
